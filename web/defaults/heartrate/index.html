@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="res/base.css">
+	<link rel="stylesheet" href="base.css">
+	<link rel="stylesheet" href="index.css">
+	<title>/Heartrate</title>
+</head>
+
+<body>
+	<canvas id="heartRateGraph" height="1080" width="1920"></canvas>
+	<div id="gradientMaskContainer">
+		<div id="gradientMask"></div>
+	</div>
+	<img id="heart" src="assets/trangender_heart.png">
+	<span id="rate"></span>
+	<span id="min"></span>
+	<span id="max"></span>
+	<img id="dc" src="assets/disconnected.png" class="show">
+	<img id="batt" src="assets/battery_low.png">
+
+	<script src="index.js"></script>
+	<script src="/res/WsClient.js"></script>
+</body>
+
+</html>

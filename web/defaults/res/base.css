@@ -1,0 +1,22 @@
+@font-face {
+	font-family: 'Aldrich';
+	src: url(https://fonts.gstatic.com/s/aldrich/v21/MCoTzAn-1s3IGyJMVacY3w.woff2) format('woff2');
+}
+
+@font-face {
+	font-family: 'Mono';
+	src: url(https://fonts.gstatic.com/s/notosansmono/v30/BngrUXNETWXI6LwhGYvaxZikqZqK6fBq6kPvUce2oAZcdthSBUsYck4-_FNJ093dVQ.woff2) format('woff2');
+}
+
+body,
+html {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: #111;
+	color: #ddd;
+	font-family: "Aldrich";
+	min-height: 100vh;
+}

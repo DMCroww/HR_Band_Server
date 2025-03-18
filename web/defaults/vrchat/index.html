@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>VRchat</title>
+	<link rel="stylesheet" href="/res/base.css">
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+	<div id="topbar">
+		<img id="options" src="assets/cog.png" alt="Open OSC options">
+		<h3>VRC OSC control panel</h3>
+		<img id="chat" src="assets/chat.png" alt="Send a message">
+	</div>
+
+	<img id="loading" src="assets/loading.gif">
+
+	<div id="main" class="hidden">
+		<div id="panel">
+			<button>Time</button>
+			<button>BPM</button>
+			<button>Music</button>
+			<button>Random</button>
+		</div>
+
+		<div id="strings"></div>
+		<div id="addString">
+			<textarea placeholder="New string" rows="1"></textarea>
+			<button>Add</button>
+		</div>
+	</div>
+
+	<div id="settings" class="hidden">
+		<img id="power" src="assets/power.png" alt="Turn OSC on/off">
+		<img id="close" src="assets/close.png"></img>
+		<div>
+			<label>VRChat client IP</label>
+			<input id="address" placeholder="0.0.0.0" pattern="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.|$)){4}$" title="Enter a valid IP address" style="border-color: red;" type="text">
+		</div>
+		<div>
+			<label>Randomise Strings</label>
+			<label class="switch">
+				<input id="randomise" type="checkbox">
+				<span class="slider"></span>
+			</label>
+		</div>
+		<div>
+			<label>Chat message timeout</label>
+			<span id="timeout">15sec</span>
+			<input id="standaloneTimeout" type="range" min="5" max="30" value="15" step="5">
+		</div>
+		<div>
+			<table>
+				<tr>
+					<td>&nbsp;</td>
+					<td>Prefix</td>
+					<td>Suffix</td>
+				</tr>
+				<tr id="time">
+					<td>Time</td>
+					<td><input id="pref" type="text"></td>
+					<td><input id="suff" type="text"></td>
+				</tr>
+				<tr id="bpm">
+					<td>BPM</td>
+					<td><input id="pref" type="text"></td>
+					<td><input id="suff" type="text"></td>
+				</tr>
+				<tr id="music">
+					<td>Music</td>
+					<td><input id="pref" type="text"></td>
+					<td><input id="suff" type="text"></td>
+				</tr>
+				<tr id="random">
+					<td>Random</td>
+					<td><input id="pref" type="text"></td>
+					<td><input id="suff" type="text"></td>
+				</tr>
+				<tr id="standalone">
+					<td>Random</td>
+					<td><input id="pref" type="text"></td>
+					<td><input id="suff" type="text"></td>
+				</tr>
+			</table>
+		</div>
+		<div>
+			<br><button id="saveSettings">Save</button><br>
+		</div>
+	</div>
+
+	<div id="chatbox" class="hidden">
+		<img id="close" src="assets/close.png"></img>
+		<textarea placeholder="New message" rows="3"></textarea>
+		<button id="send">Send!</button>
+	</div>
+
+
+	<script src="script.js"></script>
+	<script src="/res/WsClient.js"></script>
+</body>
+
+</html>

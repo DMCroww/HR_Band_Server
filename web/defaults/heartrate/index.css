@@ -1,0 +1,24 @@
+canvas {
+	opacity: 0;
+}
+
+#rate {
+	font-size: min(65vh, 35vw);
+	position: fixed;
+	top: 52.7%;
+	left: 0;
+	transform: translateY(-50%);
+}
+
+#min,
+#max {
+	left: 2vw;
+}
+
+#min {
+	bottom: 12vh;
+}
+
+#max {
+	top: 13vh;
+}
