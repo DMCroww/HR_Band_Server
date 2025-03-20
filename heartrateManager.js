@@ -15,8 +15,8 @@ class VRChatOsc {
 		this.stopUDP()
 
 		this.udpPort = new osc.UDPPort({
-			localAddress: "0.0.0.0",  // Bind to all available network interfaces
-			localPort: 57121,         // Your local port (any available port)
+			localAddress: "0.0.0.0",
+			localPort: 57121,
 			remoteAddress: address,
 			remotePort: 9000
 		})
@@ -216,7 +216,9 @@ class HeartRateManager extends VRChatOsc {
 			case "setOptions":
 				this.#options = data.options
 
-				if (this.#options.enabled && !this.connected)
+				if (this.address != this.#options.address)
+					this.startUDP(this.#options.address)
+				else if (this.#options.enabled && !this.connected)
 					this.startUDP(this.#options.address)
 				else if (!this.#options.enabled && this.connected)
 					this.stopUDP()
