@@ -26,7 +26,7 @@ function processMessage(event) {
 	optionsUpdated()
 	validateIpInput()
 
-	stringsEl.childNodes.forEach(el => el.remove())
+	stringsEl.innerHTML = ''
 
 	strings.forEach(string => makeStringEl(string))
 
@@ -35,9 +35,7 @@ function processMessage(event) {
 	document.querySelector("#loading").classList.toggle('hidden', true)
 }
 
-function initFunc() {
-	send("server", { type: "getOptions" }, "controls")
-}
+function initFunc() { send("server", true, "getOptions") }
 
 function togglePopup(element) {
 	mainEl.classList.toggle('hidden', element != "main")

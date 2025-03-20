@@ -181,6 +181,9 @@ class HeartRateManager extends VRChatOsc {
 		if (type == 'controls')
 			return this.#controls(data)
 
+		if (type == "getOptions")
+			return this.sendWS({ options: this.#options, strings: this.#randomStrings }, 'vrchat')
+
 		if (type == 'standalone') {
 			this.#standaloneMessage = data
 			this.updateVRC()
