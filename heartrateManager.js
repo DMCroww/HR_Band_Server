@@ -2,7 +2,7 @@ const { debug, log, warn, error } = console
 const osc = require("osc")
 const fs = require("fs")
 
-
+const defaultOptions = require('./optionsDefault.json')
 
 class VRChatOsc {
 	constructor() {
@@ -98,7 +98,7 @@ class HeartRateManager extends VRChatOsc {
 		super()
 		this.#options = fs.existsSync('./_data/options.json')
 			? require('./_data/options.json')
-			: require('./optionsDefault.json')
+			: defaultOptions
 
 		if (this.#options.enabled)
 			this.startUDP(this.#options.address)
@@ -204,7 +204,7 @@ class HeartRateManager extends VRChatOsc {
 		switch (data.type) {
 			case "toggle":
 				this.#options.toggles[data.option] = !this.#options.toggles[data.option]
-				fs.writeFileSync(`./_data/options.json`, JSON.stringify(data.options))
+				fs.writeFileSync(`./_data/options.json`, JSON.stringify(this.#options))
 				break
 
 			case "addString":
@@ -222,13 +222,13 @@ class HeartRateManager extends VRChatOsc {
 				break
 
 			case "setOptions":
-				this.#options = data.options
+				this.#options = { ...defaultOptions, ...data.options }
 
-				if (this.address != this.#options.address)
+				if (this.address != this.#options.address && this.connected)
 					this.startUDP(this.#options.address)
 				else if (this.#options.enabled && !this.connected)
 					this.startUDP(this.#options.address)
-				else if (!this.#options.enabled && this.connected)
+				else if (!this.#options.enabled)
 					this.stopUDP()
 
 				fs.writeFileSync(`./_data/options.json`, JSON.stringify(this.#options))
