@@ -285,10 +285,14 @@ class HeartRateManager extends VRChatOsc {
 		if (!this.#randomStrings.length)
 			return this.#random = ''
 
-		this.#randomIndex =
-			this.#options.randomiseStrings
-				? Math.round((this.#randomStrings.length - 1) * Math.random())
-				: (this.#randomIndex + 1) % this.#randomStrings.length
+		let randIndex = this.#randomIndex
+
+		do randIndex = Math.round((this.#randomStrings.length - 1) * Math.random())
+		while (randIndex == this.#randomIndex)
+
+		this.#randomIndex = !this.#options.randomiseStrings
+			? (this.#randomIndex + 1) % this.#randomStrings.length
+			: randIndex
 
 		this.#random = this.#randomStrings[this.#randomIndex]
 	}
@@ -322,7 +326,7 @@ function readRandomStrings() {
 	if (!fs.existsSync(`./_data/VRCstrings.txt`))
 		return []
 
-	const fileContent = fs.readFileSync(`./_data/VRCstrings.txt`).toString()
+	const fileContent = fs.readFileSync(`./_data/VRCstrings.txt`).toString().trim()
 
 	if (!fileContent)
 		return []

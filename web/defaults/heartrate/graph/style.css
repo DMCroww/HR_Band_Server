@@ -2,19 +2,11 @@ canvas {
 	opacity: 0;
 }
 
-#heart {
+img#heart {
 	position: fixed;
 	transform: translate(-50%, -50%);
 	transition: 400ms ease-out;
 	transition-property: left, top;
-}
-
-#rate {
-	font-size: min(65vh, 35vw);
-	position: fixed;
-	top: 52.7%;
-	left: 0;
-	transform: translateY(-50%);
 }
 
 .pulse {
@@ -23,15 +15,15 @@ canvas {
 
 #gradientMaskContainer {
 	position: fixed;
-	mask-image: linear-gradient(90deg, transparent, white 45%);
-	-webkit-mask-image: linear-gradient(90deg, transparent, white 45%);
-	filter: contrast(1.5);
+	mask-image: linear-gradient(90deg, transparent, white 75%);
+	-webkit-mask-image: linear-gradient(90deg, transparent, white 75%);
+	filter: brightness(1.2) contrast(1.2);
 }
 
 #gradientMask {
 	width: 100%;
 	height: 100%;
-	background: linear-gradient(0deg, #44f, #4f4, #ff4, #f44);
+	background: linear-gradient(0deg, blue, green, yellow, red);
 	mask-repeat: no-repeat;
 	-webkit-mask-repeat: no-repeat;
 	mask-position: right;
@@ -42,27 +34,26 @@ canvas {
 	-webkit-mask-image: linear-gradient(transparent, transparent);
 }
 
-
 #min,
 #max {
 	position: fixed;
-	left: 2vw;
+	right: .5ch;
 	color: white;
 	font-size: 11vh;
 }
 
 #min {
-	bottom: 12vh;
+	bottom: 0;
 	color: #6cbcff;
 }
 
 #max {
-	top: 13vh;
+	top: 0;
 	color: #ff7575;
 }
 
 
 #batt {
-	top: 14vh;
-	left: 14vw;
+	top: 12vh;
+	right: 4vw;
 }

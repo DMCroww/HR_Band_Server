@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/r/style.css">
+	<link rel="stylesheet" href="../style.css">
+	<link rel="stylesheet" href="style.css">
+	<title>Heartrate History</title>
+</head>
+
+<body>
+	<canvas id="heartRateGraph" height="1080" width="1920"></canvas>
+	<div id="topBar">
+		<div id="rangeBar">
+			<select id="rangeSelect"></select>
+			<div id="navButtons">
+				<button>&lt;</button>
+				<span id="range">Selected Range</span>
+				<button>&gt;</button>
+			</div>
+		</div>
+		<div id="buttons">
+			<div id="stepButtons">
+				<button>-</button>
+				<span>Step:</span>
+				<button>+</button>
+			</div>
+			<div id="smButtons">
+				<button>-</button>
+				<span>Smoothing</span>
+				<button>+</button>
+			</div>
+			<div id="zoomButtons">
+				<button>-</button>
+				<span>Zoom</span>
+				<button>+</button>
+			</div>
+		</div>
+	</div>
+	<div id="graphArea">
+		<div id="text"></div>
+		<div id="gradientMaskContainer">
+			<div id="gradientMask"></div>
+		</div>
+	</div>
+	<script src="script.js"></script>
+
+</body>
+
+</html>

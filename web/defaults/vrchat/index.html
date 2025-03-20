@@ -10,22 +10,22 @@
 </head>
 
 <body>
-	<div id="topbar">
-		<img id="options" src="assets/cog.png" alt="Open OSC options">
-		<h3>VRC OSC control panel</h3>
-		<img id="chat" src="assets/chat.png" alt="Send a message">
-	</div>
 
 	<img id="loading" src="assets/loading.gif">
 
 	<div id="main" class="hidden">
+		<div id="buttons">
+			<img id="chat" src="assets/chat.png" alt="Send a message">
+			<h3>VRC OSC control panel</h3>
+			<img id="options" src="assets/cog.png" alt="Open OSC options">
+		</div>
+
 		<div id="panel">
 			<button>Time</button>
 			<button>BPM</button>
 			<button>Music</button>
 			<button>Random</button>
 		</div>
-
 		<div id="strings"></div>
 		<div id="addString">
 			<textarea placeholder="New string" rows="1"></textarea>
@@ -34,8 +34,11 @@
 	</div>
 
 	<div id="settings" class="hidden">
-		<img id="power" src="assets/power.png" alt="Turn OSC on/off">
-		<img id="close" src="assets/close.png"></img>
+		<div id="buttons">
+			<img id="power" src="assets/power.png" alt="Turn OSC on/off">
+			<h3>OSC Settings</h3>
+			<img id="close" src="assets/close.png">
+			</div>
 		<div>
 			<label>VRChat client IP</label>
 			<input id="address" placeholder="0.0.0.0" pattern="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.|$)){4}$" title="Enter a valid IP address" style="border-color: red;" type="text">
@@ -80,7 +83,7 @@
 					<td><input id="suff" type="text"></td>
 				</tr>
 				<tr id="standalone">
-					<td>Random</td>
+					<td>Chat</td>
 					<td><input id="pref" type="text"></td>
 					<td><input id="suff" type="text"></td>
 				</tr>
@@ -89,10 +92,22 @@
 		<div>
 			<br><button id="saveSettings">Save</button><br>
 		</div>
+		<div id="mockData">
+			<h3>Send test data:</h3>
+			<div>
+				<input id="mockAddress" type="text" placeholder="Path">
+				<input id="mockValue" type="text" placeholder="Value">
+			</div>
+			<button id="sendMock">Send</button>
+		</div>
 	</div>
 
 	<div id="chatbox" class="hidden">
-		<img id="close" src="assets/close.png"></img>
+		<div id="buttons">
+			<nil></nil>
+			<h3>Send chat</h3>
+			<img id="close" src="assets/close.png">
+		</div>
 		<textarea placeholder="New message" rows="3"></textarea>
 		<button id="send">Send!</button>
 	</div>

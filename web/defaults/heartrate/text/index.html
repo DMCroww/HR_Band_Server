@@ -5,26 +5,26 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="/r/style.css">
+	<link rel="stylesheet" href="../style.css">
 	<link rel="stylesheet" href="style.css">
-	<link rel="stylesheet" href="index.css">
-	<title>Heartrate</title>
+	<title>Text</title>
 </head>
 
 <body>
-	<canvas id="heartRateGraph" height="1080" width="1920"></canvas>
-	<div id="gradientMaskContainer">
-		<div id="gradientMask"></div>
-	</div>
 	<img id="heart" src="/res/assets/heart.png">
-	<span id="rate"></span>
-	<span id="min"></span>
-	<span id="max"></span>
+	<div id="text">
+		<span id="rate"></span>
+		<div id="minMax">
+			<p>▼<span id="min"></span></p>
+			<p>▲<span id="max"></span></p>
+		</div>
+	</div>
 	<img id="dc" src="/res/assets/disconnected.png" class="show">
 	<img id="batt" src="/res/assets/battery_low.png">
-
-	<script src="index.js"></script>
 	<script src="script.js"></script>
+	<script src="../script.js"></script>
 	<script src="/r/client.js"></script>
+
 </body>
 
 </html>

@@ -15,28 +15,46 @@ const id = document.location.pathname.split('/').filter((str => str != '' && str
 /** Get the address of the server with appropriate protocol (ws/wss) */
 const addr = `${document.location.protocol.replace('http', 'ws')}//${document.location.host}`
 
-let socket
+const { channel, code } = document.cookie
+	.split('; ')
+	.reduce((cookies, cookie) => {
+		const [key, value] = cookie.split('=')
+		cookies[key] = decodeURIComponent(value)
+		return cookies
+	}, {})
 
-/** Initialize and connect to the WebSocket server */
+
+if (typeof processMessage !== 'function') processMessage = () => { }
+if (typeof initFunc !== 'function') initFunc = () => { }
+
+
+setInterval(() => send("server", true, "keepalive"), 30000)
+
+let socket
 function connect() {
 	socket = new WebSocket(addr)
 	socket.onopen = () => {
-		console.log("Connected to WS.")
-		send("server", true, "keepalive")
+		send("server", true, "new")
+		initFunc()
 	}
 	socket.onmessage = processMessage
-	socket.onclose = () => {
-		console.warn("Closed, reconnecting in 5s...")
+	socket.onclose = (reason) => {
+		console.warn(reason)
+		console.log("Closed, reconnecting in 5s...")
 		setTimeout(connect, 5000)
 	}
-	socket.onerror = console.error
+	socket.onerror = console.log
 }
 
 function send(to, data, type = "command") {
-	if (socket.readyState === 1)
-		return socket.send(JSON.stringify({ id, to, type, data }))
+	if (socket.OPEN) try {
+		socket.send(JSON.stringify({ id, to, type, data, channel, code }))
+		return
+	} catch (err) {
+		console.warn(`Cant send WS message:`, err, `Retrying in 1s`)
+	}
 	// If fails, try later
-	setTimeout(() => { send(to, data, type) }, 200)
+	setTimeout(() => { send(to, data, type) }, 1000)
 }
 
 connect()

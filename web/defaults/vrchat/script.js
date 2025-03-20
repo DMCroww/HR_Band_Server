@@ -11,6 +11,9 @@ const ipInput = settingsEl.querySelector("#address")
 const chatEl = document.querySelector("#chatbox")
 const chatInputEl = chatEl.querySelector("textarea")
 
+
+const ipRegex = /^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}$/
+
 let settings = {
 	enabled: true,
 	address: "",
@@ -52,18 +55,23 @@ function processMessage(event) {
 	document.querySelector("#loading").classList.toggle('hidden', true)
 }
 
+function initFunc() {
+	send("server", { type: "getOptions" }, "controls")
+}
+
+function togglePopup(element) {
+	mainEl.classList.toggle('hidden', element != "main")
+	settingsEl.classList.toggle('hidden', element != "settings")
+	chatEl.classList.toggle('hidden', element != "chat")
+}
 
 // Validate IP adress on input
 ipInput.addEventListener("blur", validateIpInput)
 
 function validateIpInput() {
 	const ip = ipInput.value.trim()
-	if (!/^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}$/.test(ip)) {
-		alert("Invalid IP address!")
-		ipInput.style.borderColor = "red"
-	} else {
-		ipInput.style.borderColor = ""
-	}
+
+	ipInput.style.borderColor = !ipRegex.test(ip) ? "red" : ""
 }
 
 
@@ -75,7 +83,6 @@ function optionsUpdated() {
 	})
 
 	settingsEl.querySelector("#address").value = settings.address
-
 	settingsEl.querySelector("#randomise").checked = settings.randomiseStrings
 	settingsEl.querySelector("#standaloneTimeout").value = settings.standaloneTimeout
 	settingsEl.querySelector("#timeout").innerText = settings.standaloneTimeout + "sec"
@@ -88,20 +95,21 @@ function optionsUpdated() {
 	)
 }
 
+
 function makeStringEl(string) {
 	const p = document.createElement('p')
 
 	p.innerText = string
 
-	const editSpan = document.createElement('span')
-	editSpan.className = 'edit'
-	editSpan.onclick = () => editString(string)
-	p.appendChild(editSpan)
+	const editImg = document.createElement('img')
+	editImg.src = 'assets/edit.png'
+	editImg.onclick = () => editString(string)
+	p.appendChild(editImg)
 
-	const removeSpan = document.createElement('span')
-	removeSpan.className = 'delete'
-	removeSpan.onclick = () => removeString(string)
-	p.appendChild(removeSpan)
+	const deleteImg = document.createElement('img')
+	deleteImg.src = 'assets/delete.png'
+	deleteImg.onclick = () => removeString(string)
+	p.appendChild(deleteImg)
 
 	stringsEl.appendChild(p)
 }
@@ -155,14 +163,27 @@ powerEl.onclick = () => {
 	saveOptions()
 }
 
+document.querySelector("#chat").onclick = () => togglePopup('chat')
+document.querySelector('#options').onclick = () => togglePopup("settings")
+document.querySelectorAll("img#close")
+	.forEach(el => el.onclick = () => togglePopup('main'))
 document.querySelector('#saveSettings').onclick = () => {
 	saveOptions()
 	togglePopup('main')
 }
+document.querySelector('#sendMock').onclick = () => {
+	const address = document.querySelector('#mockAddress').value.trim()
+	let value = document.querySelector('#mockValue').value.trim()
 
-document.querySelectorAll("img#close").forEach((el) => {
-	el.onclick = () => togglePopup('main')
-})
+	if (value == 'true') value = true
+	if (value == 'false') value = false
+
+	if (isNaN(parseFloat(value))) value = parseFloat(value)
+
+	if (address != '' && value != '')
+		send("server", { address, value }, "mock")
+}
+
 
 settingsEl.querySelector("#standaloneTimeout").addEventListener('input', () => {
 	const val = settingsEl.querySelector("#standaloneTimeout").value
@@ -186,10 +207,6 @@ function sendStandalone() {
 	chatInputEl.value = ''
 }
 
-document.querySelector("#chat").addEventListener('click', (event) => {
-	event.preventDefault()
-	togglePopup('chat')
-})
 
 
 function saveOptions() {
@@ -207,18 +224,3 @@ function saveOptions() {
 
 	send("server", { type: "setOptions", options: settings }, "controls")
 }
-
-document.querySelector('#options').onclick = () => togglePopup("settings")
-
-
-function togglePopup(element) {
-	mainEl.classList.toggle('hidden', element != "main")
-	topEl.classList.toggle('hidden', element != "main")
-	settingsEl.classList.toggle('hidden', element != "settings")
-	chatEl.classList.toggle('hidden', element != "chat")
-	if (element == "chat")
-		chatInputEl.focus()
-}
-
-setTimeout(() => send("server", { type: "getOptions" }, "controls"),
-	300)

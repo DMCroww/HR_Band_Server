@@ -1,0 +1,77 @@
+html,
+body {
+	padding: 0;
+	margin: 0;
+	height: 100vh;
+	width: 100vw;
+	overflow: hidden;
+	font-family: "Aldrich";
+}
+
+body {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+#text {
+	width: 70vw;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+#rate {
+	font-size: 62vh;
+	margin: -0.2em 0 -.28em;
+	text-shadow: 0 0 20px black, 0 0 20px black, 0 0 20px black, 0 0 20px black, 0 0 20px black, 0 0 20px black, 0 0 20px black, 0 0 20px black, 0 0 20px black, 0 0 20px black, 0 0 20px black;
+}
+
+img {
+	width: 20vw;
+}
+
+.pulse {
+	animation: pulse 0.7s forwards;
+}
+
+#minMax {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 18vh;
+	color: white;
+	gap: .5ch;
+	text-shadow: 0 0 10px black, 0 0 10px black, 0 0 10px black, 0 0 10px black, 0 0 10px black, 0 0 10px black, 0 0 10px black;
+}
+
+#min {
+	color: #6cbcff;
+	font-size: 1.5em;
+}
+
+#max {
+	color: #ff7575;
+	font-size: 1.5em;
+}
+
+#min,
+#max {
+	font-weight: bold;
+}
+
+p {
+	margin: 0;
+	padding: 0;
+}
+
+
+#batt {
+	bottom: 21vh;
+	left: 5vw;
+}
+
+#heart {
+	z-index: 10;
+}
