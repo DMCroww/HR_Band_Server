@@ -333,8 +333,10 @@ function getTimeString() {
 }
 
 function readRandomStrings() {
-	if (!fs.existsSync(`./_data/VRCstrings.txt`))
+	if (!fs.existsSync(`./_data/VRCstrings.txt`)) {
+		saveRandomStrings()
 		return []
+	}
 
 	const fileContent = fs.readFileSync(`./_data/VRCstrings.txt`).toString().trim()
 
