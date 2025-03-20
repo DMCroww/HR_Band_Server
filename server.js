@@ -7,7 +7,6 @@ const HeartRateManager = require("./heartrateManager")
 // VARS #region default
 const IP = "0.0.0.0"
 const PORT = 80
-const webRoot = "./web"
 
 let clients = new Map()
 const contentTypes = {
@@ -37,11 +36,11 @@ const server = http.createServer((req, res) => {
 	if (path == "/heartrate/history/get/")
 		return res.end(heartRateMan.readHrHistory())
 
-	if (serveFile(res, `${path}`)) return
-	if (serveFile(res, `/defaults${path}`)) return
+	if (serveFile(res, `./web${path}`)) return
+	if (serveFile(res, `./webDefault${path}`)) return
 
 	res.writeHead(404, { 'Content-Type': 'text/html' })
-	return res.end(fs.readFileSync(webRoot + "/defaults/404.html"))
+	return res.end(fs.readFileSync("./webDefault/404.html"))
 })
 
 const wsServ = new WebSocket.Server({ server, pingTimeout: 120000, pingInterval: 60000 })
@@ -55,7 +54,7 @@ wsServ.on("connection", (ws) => {
 			clients.set(id, [])
 
 		// Remove closed or duplicate instances of this WebSocket
-		clients.set(id, clients.get(id).filter(client => client.readyState === WebSocket.OPEN))
+		clients.set(id, clients.get(id).filter(client => client.readyState === WebSocket.OPEN && client !== ws))
 
 		// Add the new client
 		clients.get(id).push(ws)
@@ -97,7 +96,7 @@ function sendWS(data, to, id = "server", type = "data") {
 		if (clients.has(to))
 			clients.get(to).forEach((client) => {
 				if (client.readyState === WebSocket.OPEN)
-					client.send(JSON.stringify({ id, type, data, channel }))
+					client.send(JSON.stringify({ id, type, data, to }))
 			})
 	}
 
@@ -106,11 +105,9 @@ function sendWS(data, to, id = "server", type = "data") {
 }
 
 
-// WEB PROVIDERS #region default
 function serveFile(res, path) {
-	const filePath = webRoot + path
-	const indexPath = filePath + "index.html"
-	const file = fs.existsSync(indexPath) ? indexPath : fs.existsSync(filePath) ? filePath : ''
+	const indexPath = path + "index.html"
+	const file = fs.existsSync(indexPath) ? indexPath : fs.existsSync(path) ? path : ''
 
 	if (!file || file.endsWith('/')) return false
 
@@ -126,4 +123,3 @@ function serveFile(res, path) {
 	})
 	return true
 }
-// #end

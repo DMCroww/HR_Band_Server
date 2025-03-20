@@ -2,6 +2,8 @@ const { debug, log, warn, error } = console
 const osc = require("osc")
 const fs = require("fs")
 
+
+
 class VRChatOsc {
 	constructor() {
 		/**@private */
@@ -94,7 +96,10 @@ class HeartRateManager extends VRChatOsc {
 
 	constructor(wsSendFunc) {
 		super()
-		this.#options = require('./_data/options.json')
+		this.#options = fs.existsSync('./_data/options.json')
+			? require('./_data/options.json')
+			: require('./optionsDefault.json')
+
 		if (this.#options.enabled)
 			this.startUDP(this.#options.address)
 
@@ -243,7 +248,7 @@ class HeartRateManager extends VRChatOsc {
 
 		const lines = Object.entries(dataMap).reduce((arr, [key, value]) => {
 			if (toggles[key] && value)
-				arr.push(`${prefixes[key]}${value}${suffixes[key]}`)
+				arr.push(` ${prefixes[key]} ${value} ${suffixes[key]} `)
 
 			return arr
 		}, [])
@@ -251,7 +256,7 @@ class HeartRateManager extends VRChatOsc {
 		if (this.#standaloneMessage)
 			this.sendChat(` ${this.#options.prefixes.standalone} ${this.#standaloneMessage}`)
 		else if (lines.length)
-			this.sendChat(` ${lines.join('\n')} `)
+			this.sendChat(`${lines.join('\n')}`)
 	}
 
 

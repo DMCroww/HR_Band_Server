@@ -14,30 +14,7 @@ const chatInputEl = chatEl.querySelector("textarea")
 
 const ipRegex = /^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}$/
 
-let settings = {
-	enabled: true,
-	address: "",
-	prefixes: {
-		time: "",
-		bpm: "",
-		music: "",
-		random: ""
-	},
-	suffixes: {
-		time: "",
-		bpm: "",
-		music: "",
-		random: ""
-	},
-	toggles: {
-		time: true,
-		bpm: true,
-		music: true,
-		random: true
-	},
-	randomiseStrings: false,
-	standaloneTimeout: 15
-}
+let settings
 
 function processMessage(event) {
 	const { id, data } = JSON.parse(event.data)
@@ -48,6 +25,9 @@ function processMessage(event) {
 	settings = options
 	optionsUpdated()
 	validateIpInput()
+
+	stringsEl.childNodes.forEach(el => el.remove())
+
 	strings.forEach(string => makeStringEl(string))
 
 	mainEl.classList.toggle('hidden', false)

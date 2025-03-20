@@ -1,0 +1,26 @@
+{
+	"enabled": true,
+	"address": "",
+	"prefixes": {
+		"time": "【┘】",
+		"bpm": "♡",
+		"music": "🎧",
+		"random": "💭",
+		"standalone": "💬"
+	},
+	"suffixes": {
+		"time": "ㅤ",
+		"bpm": "",
+		"music": "",
+		"random": "",
+		"standalone": ""
+	},
+	"toggles": {
+		"time": true,
+		"bpm": true,
+		"music": true,
+		"random": true
+	},
+	"randomiseStrings": true,
+	"standaloneTimeout": "15"
+}
