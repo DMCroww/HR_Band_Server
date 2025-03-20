@@ -72,7 +72,7 @@ Web pages are fully customiseable, adding your own overlays and pages is fully e
 
 ## Contributing
 
-Got ideas for a new feature or a quirky improvement? Fork the repository, create a new branch, and submit a pull request.
+Got ideas for a new feature or a quirky improvement? Create a feature request.
 
 ## License
 
