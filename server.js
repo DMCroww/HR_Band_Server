@@ -50,11 +50,15 @@ wsServ.on("connection", (ws) => {
 		const dataObj = JSON.parse(message)
 		let { id, to, type, data } = dataObj
 
-		// REMOVE DUPLICATE CLIENT (prevent multiple clients for one id)
-		clients = clients.filter(c => c.id != id)
+		// Ensure there's an array for this key
+		if (!clients.has(id))
+			clients.set(id, [])
 
-		// ADD THE SENDER BACK TO CLIENTS LIST
-		clients.push({ ws, id })
+		// Remove closed or duplicate instances of this WebSocket
+		clients.set(id, clients.get(id).filter(client => client.readyState === WebSocket.OPEN && client !== ws))
+
+		// Add the new client
+		clients.get(id).push(ws)
 
 		if (type == "keepalive") return
 
@@ -67,8 +71,17 @@ wsServ.on("connection", (ws) => {
 			sendWS(data, to, id, type)
 	})
 
+	ws.on('close', () => {
+		// Remove the closed WebSocket from all entries
+		for (const [id, connections] of clients.entries()) {
+			clients.set(id, connections.filter(client => client !== ws))
+
+			// Cleanup empty arrays
+			if (clients.get(id).length === 0) clients.delete(id)
+		}
+	})
+
 	ws.on('error', error)
-	ws.on('close', () => clients = clients.filter(c => c.ws !== ws))
 })
 wsServ.on('error', error)
 wsServ.on('close', error)
