@@ -97,7 +97,7 @@ function serveFile(res, path) {
 	const indexPath = filePath + "index.html"
 	const file = fs.existsSync(indexPath) ? indexPath : fs.existsSync(filePath) ? filePath : ''
 
-	if (!file || file == './web/') return false
+	if (!file || file.endsWith('/')) return false
 
 	let type = contentTypes[file.split('.').slice(-1)[0]] || 'text/html'
 	fs.readFile(file, (err, data) => {
