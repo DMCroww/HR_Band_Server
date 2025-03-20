@@ -9,7 +9,7 @@ const IP = "0.0.0.0"
 const PORT = 80
 const webRoot = "./web"
 
-let clients = Array()
+let clients = new Map()
 const contentTypes = {
 	html: 'text/html',
 	css: 'text/css',
@@ -55,7 +55,7 @@ wsServ.on("connection", (ws) => {
 			clients.set(id, [])
 
 		// Remove closed or duplicate instances of this WebSocket
-		clients.set(id, clients.get(id).filter(client => client.readyState === WebSocket.OPEN && client !== ws))
+		clients.set(id, clients.get(id).filter(client => client.readyState === WebSocket.OPEN))
 
 		// Add the new client
 		clients.get(id).push(ws)
@@ -102,7 +102,7 @@ function sendWS(data, to, id = "server", type = "data") {
 	}
 
 	if (typeof to === 'string') send(to)
-	else to.forEach(send)
+	else to.forEach(target => send(target))
 }
 
 
