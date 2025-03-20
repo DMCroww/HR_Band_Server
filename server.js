@@ -91,18 +91,20 @@ server.listen(PORT, IP, () => log(`Server ready.`))
 // #end
 
 /** Sends data to specified client if client exists. */
-function sendWS(/** @type {any}*/data,/** @type {String|String[]}*/to,/** @type {String}*/id = "server",/** @type {String}*/type = "data") {
-	const send = (client) => client.ws.send(JSON.stringify({ id, type, data }))
 
-	if (typeof to === 'string')
-		clients.filter(c => c.id === to).forEach(send)
-
-	else try {
-		to.forEach(target => clients.filter(c => c.id === target).forEach(send))
-	} catch (err) {
-		error(err)
+function sendWS(data, to, id = "server", type = "data") {
+	const send = (to) => {
+		if (clients.has(to))
+			clients.get(to).forEach((client) => {
+				if (client.readyState === WebSocket.OPEN)
+					client.send(JSON.stringify({ id, type, data, channel }))
+			})
 	}
+
+	if (typeof to === 'string') send(to)
+	else to.forEach(send)
 }
+
 
 // WEB PROVIDERS #region default
 function serveFile(res, path) {
