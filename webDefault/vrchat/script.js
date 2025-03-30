@@ -57,7 +57,7 @@ function optionsUpdated() {
 	powerEl.classList.toggle('enabled', settings.enabled)
 
 	document.querySelectorAll("#panel button").forEach(button => {
-		button.classList.toggle('enabled', settings.toggles[button.innerText.toLowerCase()])
+		button.classList.toggle('enabled', settings.toggles[button.innerHTML.toLowerCase()])
 	})
 
 	settingsEl.querySelector("#address").value = settings.address

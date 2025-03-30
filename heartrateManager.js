@@ -97,7 +97,7 @@ class HeartRateManager extends VRChatOsc {
 	constructor(wsSendFunc) {
 		super()
 		this.#options = fs.existsSync('./_data/options.json')
-			? require('./_data/options.json')
+			? JSON.parse(fs.readFileSync('./_data/options.json'))
 			: defaultOptions
 
 		if (this.#options.enabled)
